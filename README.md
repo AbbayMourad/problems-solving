@@ -1,2 +1,3 @@
 # problems-solving
 repo that contains my solutions to problems on platforms like: leetcode, hackerrank, hackerearth...
+because I am a human, there is a lot of things I don't know, so feel free to make any suggestions
