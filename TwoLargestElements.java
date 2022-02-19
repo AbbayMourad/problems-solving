@@ -1,11 +1,14 @@
 import java.util.Arrays;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.List;
+import java.util.ArrayList;
+
 
 public class TwoLargestElements {
 
   // return [largest, second_largest]
   // 1.5*n comparaisons
-  private static int[] twoLargestElementsFast(int[] a) {
+  private static int[] twoLargestElementsBetter(int[] a) {
     int n = a.length;
     if (n < 2) return null;
     // for each pair memorize the position of the largest
@@ -101,4 +104,43 @@ public class TwoLargestElements {
   public static void main(String[] args) {
     stressTest(100, 10_000);
   }
+
+  // takes n+log(n)-2 comparaisons
+  public static int[] twoLargestElementsFast(int[] a) {
+    //step 1: find the largest + remember the elements that lost comparaison against the largest (n-1 comparaisons)  
+    //step 2: the second largest is one of the elements that lost to the largest, so search in that list (log(n)-1)
+    //step 3: return the answer
+    List<List<Integer>> compared = new ArrayList<>(a.length);
+    for (int i = 0; i < a.length; ++i)
+      compared.add(new ArrayList<>());
+  
+    int k1 = findLargest(0, a.length-1, a, compared);
+
+    int k2 = compared.get(k1).get(0);
+    for (int i = 1; i < compared.get(k1).size(); i++) {
+      int j = compared.get(k1).get(i);
+      if (a[j] > a[k2])
+        k2 = j;
+    }
+
+    return new int[]{a[k1], a[k2]};
+  }
+
+  // return the index of the largest ele
+  private static int findLargest(int i, int j, int[] a, List<List<Integer>> compared) {
+    if (i == j)
+      return i;
+    int k1 = findLargest(i, i + (j-i)/2, a, compared);
+    int k2 = findLargest(1+i + (j-i)/2, j, a, compared);
+    if (a[k1] > a[k2]) {
+      compared.get(k1).add(k2);
+      compared.get(k2).clear();
+      return k1; 
+    } else {
+      compared.get(k2).add(k1);
+      compared.get(k1).clear();
+      return k2;
+    }
+  }
+
 }
