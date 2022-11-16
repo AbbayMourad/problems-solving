@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
+
 public class FastScanner {
   BufferedReader br;
   StringTokenizer st;
@@ -5,7 +11,7 @@ public class FastScanner {
   FastScanner(InputStream stream) {
     try {
       br = new BufferedReader(new
-      InputStreamReader(stream));
+              InputStreamReader(stream));
     } catch (Exception e) {
       e.printStackTrace();
     }

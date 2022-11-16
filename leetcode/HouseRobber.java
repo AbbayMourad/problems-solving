@@ -1,3 +1,5 @@
+package leetcode;
+
 public class HouseRobber {
     private static final HouseRobber houseRobber = new HouseRobber();
 
